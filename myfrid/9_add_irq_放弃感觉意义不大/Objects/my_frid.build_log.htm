@@ -1,0 +1,178 @@
+<html>
+<body>
+<pre>
+<h1>�Vision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ��Vision V5.24.2.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: a 2271854372@qq.com, a, LIC=8VRJ7-E1QYX-KP1ZY-IXKUQ-A3NT3-N3MMG
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.24.1
+Toolchain Path:  D:\keil5 MDK\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 5 (build 528)
+Assembler:       Armasm.exe V5.06 update 5 (build 528)
+Linker/Locator:  ArmLink.exe V5.06 update 5 (build 528)
+Library Manager: ArmAr.exe V5.06 update 5 (build 528)
+Hex Converter:   FromElf.exe V5.06 update 5 (build 528)
+CPU DLL:         SARMCM3.DLL V5.24.1
+Dialog DLL:      DCM.DLL V1.16.0.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.1.0
+Dialog DLL:      TCM.DLL V1.32.0.0
+ 
+<h2>Project:</h2>
+C:\Users\22718\Desktop\MY_FRID\myfrid\9_add_irq_�����о����岻��\my_frid.uvprojx
+Project File Date:  06/03/2025
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\keil5 MDK\ARM\ARMCC\Bin'
+Build target 'Target 1'
+compiling main.c...
+.\hardware\MY_MFRC522.h(9): warning:  #1295-D: Deprecated declaration MFRC522_Anticoll - give arg types
+  uint8_t MFRC522_Anticoll();
+user\main.c(135): error:  #65: expected a ";"
+  		}
+user\main.c(71): warning:  #177-D: variable "writeData"  was declared but never referenced
+  		uint8_t writeData[18] = {
+user\main.c(56): warning:  #177-D: variable "size"  was declared but never referenced
+  	uint8_t val,size, status_auth,status_write,status_read;
+user\main.c(56): warning:  #177-D: variable "status_auth"  was declared but never referenced
+  	uint8_t val,size, status_auth,status_write,status_read;
+user\main.c(56): warning:  #177-D: variable "status_write"  was declared but never referenced
+  	uint8_t val,size, status_auth,status_write,status_read;
+user\main.c(56): warning:  #177-D: variable "status_read"  was declared but never referenced
+  	uint8_t val,size, status_auth,status_write,status_read;
+user\main.c(57): warning:  #177-D: variable "key"  was declared but never referenced
+  	uint8_t key[6]={0xff,0xff,0xff,0xff,0xff,0xff};
+user\main.c(58): warning:  #177-D: variable "result_que"  was declared but never referenced
+  	uint8_t result_que;
+user\main.c(59): warning:  #177-D: variable "blockAddr"  was declared but never referenced
+  	uint8_t blockAddr=4;
+user\main.c(61): warning:  #177-D: variable "back_datas"  was declared but never referenced
+  	uint8_t back_datas[16];
+user\main.c(62): warning:  #177-D: variable "buffer"  was declared but never referenced
+  	uint8_t buffer[18]={0};
+user\main.c(63): warning:  #177-D: variable "item_addr"  was declared but never referenced
+  	uint32_t item_addr;
+user\main.c(64): warning:  #177-D: variable "item"  was declared but never referenced
+  	whitelistitem item;
+user\main.c(66): warning:  #177-D: variable "j"  was declared but never referenced
+  	uint8_t j,irqstate,status;
+user\main.c(66): warning:  #177-D: variable "irqstate"  was declared but never referenced
+  	uint8_t j,irqstate,status;
+user\main.c(66): warning:  #177-D: variable "status"  was declared but never referenced
+  	uint8_t j,irqstate,status;
+user\main.c(67): warning:  #177-D: variable "maxwait"  was declared but never referenced
+  	uint16_t maxwait;
+user\main.c(68): warning:  #177-D: variable "n"  was declared but never referenced
+  	uint8_t n,bits_LastByte;
+user\main.c(68): warning:  #177-D: variable "bits_LastByte"  was declared but never referenced
+  	uint8_t n,bits_LastByte;
+user\main.c(137): error:  #169: expected a declaration
+  }
+user\main.c(164): warning:  #12-D: parsing restarts here after previous syntax error
+  	OLED_ShowString(1, 1, "MID:   DID:");
+user\main.c(167): error:  #79: expected a type specifier
+  	W25Q64_ReadID(&MID, &DID);			//获取W25Q64的ID�?
+user\main.c(167): error:  #79: expected a type specifier
+  	W25Q64_ReadID(&MID, &DID);			//获取W25Q64的ID�?
+user\main.c(167): error:  #260-D: explicit type is missing ("int" assumed)
+  	W25Q64_ReadID(&MID, &DID);			//获取W25Q64的ID�?
+user\main.c(167): error:  #147: declaration is incompatible with "void W25Q64_ReadID(uint8_t *, uint16_t *)"  (declared at line 5 of ".\hardware\W25Q64.h")
+  	W25Q64_ReadID(&MID, &DID);			//获取W25Q64的ID�?
+user\main.c(168): error:  #79: expected a type specifier
+  	OLED_ShowHexNum(1, 5, MID, 2);		//显示MID
+user\main.c(168): error:  #79: expected a type specifier
+  	OLED_ShowHexNum(1, 5, MID, 2);		//显示MID
+user\main.c(168): error:  #757: variable "MID"  is not a type name
+  	OLED_ShowHexNum(1, 5, MID, 2);		//显示MID
+user\main.c(168): error:  #79: expected a type specifier
+  	OLED_ShowHexNum(1, 5, MID, 2);		//显示MID
+user\main.c(168): error:  #260-D: explicit type is missing ("int" assumed)
+  	OLED_ShowHexNum(1, 5, MID, 2);		//显示MID
+user\main.c(168): error:  #147: declaration is incompatible with "void OLED_ShowHexNum(uint8_t, uint8_t, uint32_t, uint8_t)"  (declared at line 10 of ".\hardware\OLED.h")
+  	OLED_ShowHexNum(1, 5, MID, 2);		//显示MID
+user\main.c(169): error:  #79: expected a type specifier
+  	OLED_ShowHexNum(1, 12, DID, 4);		//显示DID
+user\main.c(169): error:  #79: expected a type specifier
+  	OLED_ShowHexNum(1, 12, DID, 4);		//显示DID
+user\main.c(169): error:  #757: variable "DID"  is not a type name
+  	OLED_ShowHexNum(1, 12, DID, 4);		//显示DID
+user\main.c(169): error:  #79: expected a type specifier
+  	OLED_ShowHexNum(1, 12, DID, 4);		//显示DID
+user\main.c(169): error:  #260-D: explicit type is missing ("int" assumed)
+  	OLED_ShowHexNum(1, 12, DID, 4);		//显示DID
+user\main.c(170): error:  #79: expected a type specifier
+  	Serial_Printf("DID=%x\r\n",DID);
+user\main.c(170): error:  #757: variable "DID"  is not a type name
+  	Serial_Printf("DID=%x\r\n",DID);
+user\main.c(170): error:  #260-D: explicit type is missing ("int" assumed)
+  	Serial_Printf("DID=%x\r\n",DID);
+user\main.c(170): error:  #147: declaration is incompatible with "void Serial_Printf(const char *, ...)"  (declared at line 4 of ".\hardware\usart.h")
+  	Serial_Printf("DID=%x\r\n",DID);
+user\main.c(171): error:  #40: expected an identifier
+  	xTaskCreate(mytask,"mytask",128,NULL,2,&mytaskhandle);
+user\main.c(171): error:  #40: expected an identifier
+  	xTaskCreate(mytask,"mytask",128,NULL,2,&mytaskhandle);
+user\main.c(171): error:  #40: expected an identifier
+  	xTaskCreate(mytask,"mytask",128,
+ULL,2,&mytaskhandle);
+user\main.c(171): error:  #40: expected an identifier
+  	xTaskCreate(mytask,"mytask",128,
+ULL,2,&mytaskhandle);
+user\main.c(171): error:  #40: expected an identifier
+  	xTaskCreate(mytask,"mytask",128,
+ULL,2,&mytaskhandle);
+user\main.c(171): error:  #260-D: explicit type is missing ("int" assumed)
+  	xTaskCreate(mytask,"mytask",128,
+ULL,2,&mytaskhandle);
+user\main.c(171): error:  #92: identifier-list parameters may only be used in a function definition
+  	xTaskCreate(mytask,"mytask",128,
+ULL,2,&mytaskhandle);
+user\main.c(171): error:  #147-D: declaration is incompatible with "BaseType_t xTaskCreate(TaskFunction_t, const char *const, const uint16_t, void *const, UBaseType_t, TaskHandle_t *const)"  (declared at line 355 of ".\freertos\inc\task.h")
+  	xTaskCreate(mytask,"mytask",128,
+ULL,2,&mytaskhandle);
+user\main.c(172): error:  #40: expected an identifier
+  	xTaskCreate(spi_test,"mytask",128,NULL,2,&spitest_handle);
+user\main.c: 20 warnings, 30 errors
+compiling MY_MFRC522.c...
+hardware\MY_MFRC522.c(64): warning:  #223-D: function "Serial_Printf" declared implicitly
+          Serial_Printf("%s = 0x%02X\r\n", names[i], MFR522_ReadReg(regs[i]));
+hardware\MY_MFRC522.c(219): warning:  #223-D: function "Serial_Printf" declared implicitly
+  Serial_Printf("k=%d,status%d\r\n",k,status);	
+hardware\MY_MFRC522.c(125): warning:  #177-D: variable "maxwait"  was declared but never referenced
+  	uint16_t maxwait;
+hardware\MY_MFRC522.c(285): warning:  #223-D: function "Serial_Printf" declared implicitly
+  		   Serial_Printf(" writeData[%d]=%x\r\n",i,buffer[i]);
+hardware\MY_MFRC522.c(289): warning:  #223-D: function "Serial_Printf" declared implicitly
+  Serial_Printf("DivIRqReg  = %d\r\n",  MFR522_ReadReg( DivIRqReg));  
+hardware\MY_MFRC522.c(303): warning:  #69-D: integer conversion resulted in truncation
+  	waittimes = 1000;
+hardware\MY_MFRC522.c(316): warning:  #177-D: variable "pOutData"  was declared but never referenced
+  	uint8_t buffer[9],pOutData[2],i,size;
+hardware\MY_MFRC522.c(381): warning:  #223-D: function "Serial_Printf" declared implicitly
+  Serial_Printf("writebuffer[0]=%x\r\n",buffer[0]);	
+hardware\MY_MFRC522.c(410): warning:  #223-D: function "Serial_Printf" declared implicitly
+  				   Serial_Printf(" crcbuffer[%x]=%x\r\n",i,buffer[i]);	
+hardware\MY_MFRC522.c(413): warning:  #223-D: function "Serial_Printf" declared implicitly
+  Serial_Printf("readStatus=%d，backlen=%d\r\n",Status,backlen);	
+hardware\MY_MFRC522.c: 10 warnings, 0 errors
+".\Objects\my_frid.axf" - 30 Error(s), 30 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.2.0.pack
+                Keil.STM32F1xx_DFP.2.2.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_Target_1
+  D:\keil5 MDK\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

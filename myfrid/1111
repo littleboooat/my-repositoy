@@ -1,0 +1,161 @@
+太好了阿超，我们现在进入 RC522 驱动最核心的函数：
+
+> MFRC522_ToCard()
+所有跟卡的通信（寻卡、选卡、读写）都是通过它来实现的！
+
+
+
+
+---
+
+✅ 函数原型（你可以提前放进 rc522.c）
+
+uint8_t MFRC522_ToCard(uint8_t command, uint8_t *sendData, uint8_t sendLen,
+                       uint8_t *backData, uint32_t *backLen)
+
+
+---
+
+✅ 作用概括：
+
+把你要发给卡的命令（如 0x26 寻卡）写入 RC522 FIFO
+
+启动 RC522 发射命令
+
+等待应答或超时
+
+把卡片返回的数据（如 UID、ATQA）取出来
+
+
+
+---
+
+✅ 完整实现（带注释）：
+
+uint8_t MFRC522_ToCard(uint8_t command, uint8_t *sendData, uint8_t sendLen,
+                       uint8_t *backData, uint32_t *backLen)
+{
+    uint8_t status = MI_ERR;
+    uint8_t irqEn = 0x00;
+    uint8_t waitIRq = 0x00;
+    uint8_t lastBits;
+    uint8_t n;
+    uint32_t i;
+
+    // 设置中断使能和等待标志
+    if (command == PCD_AUTHENT) {
+        irqEn = 0x12;
+        waitIRq = 0x10;
+    }
+    if (command == PCD_TRANSCEIVE) {
+        irqEn = 0x77;
+        waitIRq = 0x30;
+    }
+
+    // 打开中断
+    MFRC522_WriteReg(CommIEnReg, irqEn | 0x80); // 允许中断请求，设置MFinPol高电平有效
+    MFRC522_ClearBitMask(CommIrqReg, 0x80);     // 清除中断标志位
+    MFRC522_SetBitMask(FIFOLevelReg, 0x80);     // 清空 FIFO 指针
+
+    // 把数据写入 FIFO
+    for (uint8_t i = 0; i < sendLen; i++) {
+        MFRC522_WriteReg(FIFODataReg, sendData[i]);
+    }
+
+    // 启动命令
+    MFRC522_WriteReg(CommandReg, command);
+    if (command == PCD_TRANSCEIVE) {
+        MFRC522_SetBitMask(BitFramingReg, 0x80); // 启动发送
+    }
+
+    // 等待命令完成（最大等待 2000 次循环）
+    i = 2000;
+    do {
+        n = MFRC522_ReadReg(CommIrqReg);
+        i--;
+    } while ((i != 0) && !(n & 0x01) && !(n & waitIRq));
+
+    // 停止发送位
+    MFRC522_ClearBitMask(BitFramingReg, 0x80);
+
+    // 检查是否超时
+    if (i != 0) {
+        if (!(MFRC522_ReadReg(ErrorReg) & 0x1B)) 
+		{
+            status = MI_OK;
+            if (n & irqEn & 0x01) status = MI_NOTAGERR;
+
+            // 获取接收到的数据长度
+            if (command == PCD_TRANSCEIVE) {
+                n = MFRC522_ReadReg(FIFOLevelReg);
+                lastBits = MFRC522_ReadReg(ControlReg) & 0x07;
+
+                if (backLen) *backLen = (n * 8) + lastBits;
+
+                if (n == 0) n = 1;
+                if (n > 16) n = 16;
+
+                // 读取 FIFO 中的数据
+                for (uint8_t i = 0; i < n; i++) {
+                    backData[i] = MFRC522_ReadReg(FIFODataReg);
+                }
+            }
+        } else {
+            status = MI_ERR;
+        }
+    }
+
+    return status;
+}
+
+
+---
+
+✅ 必须配合的常量：
+
+#define MI_OK        0
+#define MI_NOTAGERR  1
+#define MI_ERR       2
+
+
+#define PCD_IDLE        0x00
+#define PCD_AUTHENT     0x0E
+#define PCD_TRANSCEIVE  0x0C
+
+
+---
+
+✅ 总结一句话：
+
+> ToCard() 就是你和卡对话的“翻译官”+“信使”：你给它命令，它去发、等、收，回来告诉你有没有回应，以及卡说了什么。
+
+
+
+
+---
+
+你现在就可以试试跑 MFRC522_Request()，这个函数已经依赖 ToCard() 了。
+
+下一步要不要我带你看 Anticoll()，获取 UID？刷卡真正的“身份识别”就要开始了！继续？
+uint8_t MFRC522_Request(uint8_t req_mode, uint8_t *back_bits)
+{
+    uint8_t status;
+    uint8_t tag_type[1];     // 请求命令，长度1字节
+    uint8_t back_data[16];   // 存放返回数据
+    uint32_t back_len;
+
+    MFRC522_ClearBitMask(Status2Reg, 0x08);  // 清除加密位
+    MFRC522_WriteReg(BitFramingReg, 0x07);   // 设置发送的最后一个字节的接收位数 = 7位
+    MFRC522_SetBitMask(TxControlReg, 0x03);  // 打开天线发送功能
+
+    tag_type[0] = req_mode;  // 常用值：0x26 = 寻卡
+
+    status = MFRC522_ToCard(PCD_TRANSCEIVE, tag_type, 1, back_data, &back_len);
+
+    if ((status != MI_OK) || (back_len != 0x10))  // 应该返回 2 字节 = 16 位
+        status = MI_ERR;
+
+    if (back_bits)
+        *back_bits = back_len;
+
+    return status;

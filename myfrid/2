@@ -1,0 +1,41 @@
+uint8_t MFRC522_Anticoll(uint8_t *serNum)
+{
+    uint8_t status;
+    uint8_t i;
+    uint8_t serNumCheck = 0;
+    uint8_t backData[5];
+    uint32_t backLen;
+
+    MFRC522_ClearBitMask(Status2Reg, 0x08);  // 1. 清除加密标志
+    MFRC522_WriteReg(BitFramingReg, 0x00);   // 2. 设置无位偏移（发送数据从 bit0 开始）
+    MFRC522_ClearBitMask(CollReg, 0x80);     // 3. 允许防冲突（清除位屏蔽）
+
+    uint8_t buf[] = {0x93, 0x20};            // 4. 防冲突命令（Level 1）
+
+    status = MFRC522_ToCard(PCD_TRANSCEIVE, buf, 2, backData, &backLen);
+
+    if (status == MI_OK)
+    {
+        // 5. 校验返回数据长度
+        if (backLen == 40) // 5字节 * 8位
+        {
+            // 6. 保存UID前4字节
+            for (i = 0; i < 4; i++) {
+                serNum[i] = backData[i];
+                serNumCheck ^= backData[i]; // 异或校验
+            }
+
+            // 7. 校验第5字节（BCC）
+            if (serNumCheck != backData[4])
+                status = MI_ERR;
+            else
+                serNum[4] = backData[4]; // 正确则保存校验字节
+        }
+        else
+        {
+            status = MI_ERR;
+        }
+    }
+
+    return status;
+}

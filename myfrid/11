@@ -1,0 +1,22 @@
+uint8_t MFRC522_Request(uint8_t req_mode, uint8_t *back_bits)
+{
+    uint8_t status;
+    uint8_t tag_type[1];     // 请求命令，长度1字节
+    uint8_t back_data[16];   // 存放返回数据
+    uint32_t back_len;
+
+    MFRC522_ClearBitMask(Status2Reg, 0x08);  // 清除加密位
+    MFRC522_WriteReg(BitFramingReg, 0x07);   // 设置发送的最后一个字节的接收位数 = 7位
+    MFRC522_SetBitMask(TxControlReg, 0x03);  // 打开天线发送功能
+
+    tag_type[0] = req_mode;  // 常用值：0x26 = 寻卡
+
+    status = MFRC522_ToCard(PCD_TRANSCEIVE, tag_type, 1, back_data, &back_len);
+
+    if ((status != MI_OK) || (back_len != 0x10))  // 应该返回 2 字节 = 16 位
+        status = MI_ERR;
+
+    if (back_bits)
+        *back_bits = back_len;
+
+    return status;
