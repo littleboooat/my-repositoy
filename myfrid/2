@@ -31,7 +31,7 @@ uint8_t MFRC522_Anticoll(uint8_t *serNum)
             else
                 serNum[4] = backData[4]; // 正确则保存校验字节
         }
-        else
+        else44444
         {
             status = MI_ERR;
         }
