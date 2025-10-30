@@ -1,5 +1,4 @@
-Hello
-uint8_t MFRC522_Request(uint8_t req_mode, uint8_t *back_bits)
+222222    uint8_t MFRC522_Request(uint8_t req_mode, uint8_t *back_bits)
 {
     uint8_t status;
     uint8_t tag_type[1];     // 请求命令，长度1字节
@@ -20,5 +19,8 @@ uint8_t MFRC522_Request(uint8_t req_mode, uint8_t *back_bits)
     if (back_bits)
         *back_bits = back_len;
 
+
     return status;
-    
+gggg
+
+
