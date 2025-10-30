@@ -7,6 +7,7 @@
 #include"myspi.h"
 #include"Delay.h"
 
+6666666
 void IRQ_init(void)
 {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE );
